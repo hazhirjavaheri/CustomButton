@@ -1,7 +1,7 @@
 import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, *)
-struct CustomButton: View {
+public struct CustomButton: View {
     var title: String = "ButtonTitle"
     var subTitle: String?
     var image: Image?
