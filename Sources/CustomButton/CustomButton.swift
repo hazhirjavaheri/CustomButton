@@ -2,14 +2,18 @@ import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, *)
 public struct CustomButton: View {
-    var title: String = "ButtonTitle"
+    var title: String
     var subTitle: String?
     var image: Image?
     var width: CGFloat?
     var action: (() -> ())?
     
-    public init() {
-        
+    public init(title: String = "ButtonTitle",
+                subTitle: String? = nil,
+                image: Image? = nil) {
+        self.title = title
+        self.subTitle = subTitle
+        self.image = image        
     }
 
     public var body: some View {
