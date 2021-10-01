@@ -6,6 +6,6 @@
             // This is an example of a functional test case.
             // Use XCTAssert and related functions to verify your tests produce the correct
             // results.
-            XCTAssertEqual(CustomButton().text, "Hello, World!")
+//            XCTAssertEqual(CustomButton().text, "Hello, World!")
         }
     }
