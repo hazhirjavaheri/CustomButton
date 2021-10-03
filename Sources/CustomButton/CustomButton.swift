@@ -30,7 +30,7 @@ public struct CustomButtonStyle: ButtonStyle {
 }
 
 @available(iOS 13.0, macOS 10.15, *)
-struct CustomButton: View {
+public struct CustomButton: View {
     var title: String
     var subTitle: String?
     var image: Image?
@@ -40,7 +40,7 @@ struct CustomButton: View {
     private let disabled: Bool
     var action: () -> Void
 
-    init(title: String,
+    public init(title: String,
          subTitle: String? = nil,
          image: Image? = nil,
          width: CGFloat? = nil,
@@ -59,7 +59,7 @@ struct CustomButton: View {
         print("action closure")
     }
 
-    var body: some View {
+    public var body: some View {
         VStack {
             Button(action: action) {
                 HStack(alignment: .center) {
