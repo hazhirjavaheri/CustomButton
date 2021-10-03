@@ -1,32 +1,67 @@
 import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, *)
-public struct CustomButton: View {
+public struct CustomButtonStyle: ButtonStyle {
+    let foregroundColor: Color
+    let backgroundColor: Color
+    let isDisabled: Bool
+    
+    public init(foregroundColor: Color,
+                backgroundColor: Color,
+                isDisabled: Bool) {
+        self.foregroundColor = foregroundColor
+        self.backgroundColor = backgroundColor
+        self.isDisabled = isDisabled
+    }
+    
+    public func makeBody(configuration: Configuration) -> some View {
+        let currentForegroundColor = isDisabled || configuration.isPressed ? foregroundColor.opacity(0.3) : foregroundColor
+        return configuration.label
+            .padding()
+            .foregroundColor(currentForegroundColor)
+            .background(isDisabled || configuration.isPressed ? backgroundColor.opacity(0.3)
+                            : backgroundColor)
+            .cornerRadius(15)
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(currentForegroundColor, lineWidth: 3)
+        )
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, *)
+struct CustomButton: View {
     var title: String
     var subTitle: String?
     var image: Image?
     var width: CGFloat?
-    var backgroundColor: Color
     var foregroundColor: Color
-    var action: () -> ()
-    
-    public init(title: String = "ButtonTitle",
-                subTitle: String? = nil,
-                image: Image? = nil,
-                backgroundColor: Color = .white,
-                foregroundColor: Color = .black,
-                action: @escaping () -> ()) {
+    var backgroundColor: Color
+    private let disabled: Bool
+    var action: () -> Void
+
+    init(title: String,
+         subTitle: String? = nil,
+         image: Image? = nil,
+         width: CGFloat? = nil,
+         disabled: Bool = false,
+         foregroundColor: Color = Color.white,
+         backgroundColor: Color = Color.green,
+         action: @escaping () -> Void) {
         self.title = title
         self.subTitle = subTitle
         self.image = image
+        self.width = width
         self.action = action
-        self.backgroundColor = backgroundColor
+        self.disabled = disabled
         self.foregroundColor = foregroundColor
+        self.backgroundColor = backgroundColor
+        print("action closure")
     }
 
-    public var body: some View {
+    var body: some View {
         VStack {
-            Button(action: {}) {
+            Button(action: action) {
                 HStack(alignment: .center) {
                     if let image = image {
                         image
@@ -44,13 +79,13 @@ public struct CustomButton: View {
                         }
                     }
                 }
-                .frame(minWidth: 280, maxWidth: width == nil ? 280 : width, minHeight: 70)
-                .padding(10)
-                .background(RoundedRectangle(cornerRadius: 15)
-                    .stroke(lineWidth: 2.0)
-                    .foregroundColor(foregroundColor)
-                    .background(backgroundColor))
+                .frame(minWidth: 280, maxWidth: .infinity, minHeight: 70)
             }
+            .buttonStyle(CustomButtonStyle(
+                            foregroundColor: foregroundColor,
+                            backgroundColor: backgroundColor,
+                            isDisabled: disabled))
+            .padding(.horizontal, 20)
         }
     }
 }
