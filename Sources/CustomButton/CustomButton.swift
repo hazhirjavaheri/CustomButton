@@ -19,7 +19,9 @@ public struct CustomButtonStyle: ButtonStyle {
         return configuration.label
             .padding()
             .foregroundColor(currentForegroundColor)
-            .background(isDisabled || configuration.isPressed ? backgroundColor.opacity(0.3)
+            .background(
+                isDisabled || configuration.isPressed ?
+                            backgroundColor.opacity(0.3)
                             : backgroundColor)
             .cornerRadius(15)
             .overlay(
@@ -35,8 +37,6 @@ public struct CustomButton: View {
     var subTitle: String?
     var image: Image?
     var width: CGFloat?
-    var foregroundColor: Color
-    var backgroundColor: Color
     private let disabled: Bool
     var action: () -> Void
 
@@ -45,8 +45,6 @@ public struct CustomButton: View {
          image: Image? = nil,
          width: CGFloat? = nil,
          disabled: Bool = false,
-         foregroundColor: Color = Color.white,
-         backgroundColor: Color = Color.green,
          action: @escaping () -> Void) {
         self.title = title
         self.subTitle = subTitle
@@ -54,8 +52,6 @@ public struct CustomButton: View {
         self.width = width
         self.action = action
         self.disabled = disabled
-        self.foregroundColor = foregroundColor
-        self.backgroundColor = backgroundColor
         print("action closure")
     }
 
@@ -81,10 +77,6 @@ public struct CustomButton: View {
                 }
                 .frame(minWidth: 280, maxWidth: .infinity, minHeight: 70)
             }
-            .buttonStyle(CustomButtonStyle(
-                            foregroundColor: foregroundColor,
-                            backgroundColor: backgroundColor,
-                            isDisabled: disabled))
             .padding(.horizontal, 20)
         }
     }
